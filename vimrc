@@ -71,6 +71,8 @@ set smarttab
 "设置用空格代替制表符
 set expandtab
 
+"设置当前行下划线
+set cursorline
 
 "设置历史记录
 set history=100
