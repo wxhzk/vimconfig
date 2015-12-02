@@ -17,7 +17,8 @@ Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
 "Plugin 'Blackrush/vim-gocode'    "需要事先安装gocode
 Plugin 'fatih/vim-go'             "go-vim包含以上插件
 Plugin 'Shougo/neocomplete.vim'
-"Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
+Plugin 'jstemmer/gotags'
 "vundle调用结束
 call vundle#end()
 
@@ -29,7 +30,7 @@ syntax on
 "把 F8 映射到 启动NERDTree插件
 map <F8> :NERDTree<CR>
 
-Bundle 'majutsushi/tagbar'
+"Bundle 'majutsushi/tagbar'
 "把F9隐射到启动tarbar"
 nmap <F9> :TagbarToggle<CR>
 
@@ -64,6 +65,7 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
+let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
 
 "go语法高亮设置，默认是无高亮
 let g:go_highlight_functions = 1
