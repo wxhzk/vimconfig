@@ -12,13 +12,17 @@ call vundle#begin()
 "插件位置,添加完插件后，保存退出再进入vim命令模式输入:PluginInstall,安装插件
 Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
-"go相关的插件，依赖的go程序可通过:GoInstallBinaries
+"go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
 "Plugin 'dgryski/vim-godef'       "需要事先安装godef
 "Plugin 'Blackrush/vim-gocode'    "需要事先安装gocode
 Plugin 'fatih/vim-go'             "go-vim包含以上插件
+Plugin 'Blackrush/vim-gocode'     "vim-gocode
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'jstemmer/gotags'
+"cd ~/.vim/bundle && \
+"git clone https://github.com/scrooloose/syntastic.git
+Plugin 'scrooloose/syntastic'    "语法检查插件
 "vundle调用结束
 call vundle#end()
 
@@ -75,6 +79,19 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
+
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+"语法检查插件scrooloose/syntastic设置
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_ignore_files=[".*\.py$"]
 
 "git clone https://github.com/Shougo/neocomplete.vim.git 代码补全插件
 "开启代码补全插件
