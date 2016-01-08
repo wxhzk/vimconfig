@@ -13,29 +13,59 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
 "go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
-"Plugin 'dgryski/vim-godef'       "需要事先安装godef
-"Plugin 'Blackrush/vim-gocode'    "需要事先安装gocode
-"Plugin 'jstemmer/gotags'
-Plugin 'fatih/vim-go'             "go-vim包含以上插件
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'majutsushi/tagbar'
+Plugin 'fatih/vim-go'             "go-vim包含以上go开发相关的工具插件
+Plugin 'majutsushi/tagbar'        "替代taglist.vim
+"Plugin 'SuperTab'                 "SuperTab,被包含在YouCompleteMe中
+"Plugin 'Shougo/neocomplete.vim'   "自动补全插件
 "cd ~/.vim/bundle && \
 "git clone https://github.com/scrooloose/syntastic.git
-"Plugin 'scrooloose/syntastic'    "语法检查插件--导致打开文件过慢
+Plugin 'scrooloose/syntastic'    "语法检查插件--导致打开文件过慢
+Plugin 'Valloric/YouCompleteMe'   "自动补全插件
 "vundle调用结束
 call vundle#end()
 
-"设置文件类型，插件，缩进检测
-filetype plugin indent on 
-"语法高亮，需要在其他语法设置之前
-syntax on
+"SuperTab配置
+"let g:SuperTabDefaultCompletionType="context"
+
+"YouCompleteMe配置
+let mapleader = ","      "设置leader为','
+nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_confirm_extra_conf=0                   "关闭加载.ycm_extra_conf.py提示
+let g:ycm_min_num_of_chars_for_completion=2      "设置从第二个字母开始匹配
+let g:ycm_seed_identifiers_with_syntax=1         "语法关键字补全
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_collect_identifiers_from_tag_files = 1 "使用ctags生成的tags文件
+
+"syntastic语法检查配置
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers=['pylint'] 
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:syntastic_cpp_include_dirs = ['/usr/include/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+let g:syntastic_enable_balloons = 1 "whether to show balloons
+
+let python_highlight_all = 1
 
 "把 F8 映射到 启动NERDTree插件
-map <F8> :NERDTreeToggle<CR>
+map <F9> :NERDTreeToggle<CR>
 
 "Bundle 'majutsushi/tagbar'
 "把F9隐射到启动tarbar"
-nmap <F9> :TagbarToggle<CR>
+nmap <F10> :TagbarToggle<CR>
 
 set tags=./tags
 
@@ -69,6 +99,7 @@ let g:tagbar_type_go = {
     \ }
 
 let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+let NERDTreeIgnore=['\.pyc', '\.o']
 
 "go语法高亮设置，默认是无高亮
 let g:go_highlight_functions = 1
@@ -79,25 +110,30 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 
-"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-"语法检查插件scrooloose/syntastic设置
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_ignore_files=[".*\.py$"]
 
 "git clone https://github.com/Shougo/neocomplete.vim.git 代码补全插件
 "开启代码补全插件
-let g:nercomplete#enable_at_startup=1
+"let g:nercomplete#enable_at_startup=1
 
 
 "以下是独立配置，不依赖任何插件，只有基本的语法高亮
+"设置delete键的增强模式
+set backspace=2
+
+"检测文件类型
+filetyp on
+
+"针对不同的文件采取不同的缩进
+filetype indent on
+
+"允许插件
+filetype plugin on
+
+"启动智能插件
+filetype plugin indent on 
+
+"语法高亮，需要在其他语法设置之前
+syntax on
 
 "设置文件被改动时自动读入
 set autoread
@@ -120,6 +156,8 @@ set cindent
 
 "设置当前行下划线
 set cursorline
+
+set ruler
 
 "在行和段的开始处使用制表符
 set smarttab
@@ -149,6 +187,9 @@ set incsearch
 
 "设置跳转到搜索匹配的字符处
 set showmatch
+
+"设置在vim中可以使用鼠标
+set mouse=a
 
 "设置显示匹配时间
 set matchtime=5
