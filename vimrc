@@ -68,7 +68,7 @@ map <F9> :NERDTreeToggle<CR>
 "把F9隐射到启动tarbar"
 nmap <F10> :TagbarToggle<CR>
 
-set tags=./tags
+set tags=./tags,./TAGS,tags;~,TAGS;~
 
 "GoTags配置"
 let g:tagbar_type_go = {
