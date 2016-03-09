@@ -142,11 +142,12 @@ set autoread
 "设置行号
 set number
 
-"设置tab键的宽度
+"设置tab键的宽度为4个空格
 set tabstop=4
 
-"设置统一缩进为4
+"设置使用退格键一次可以干掉4个空格
 set softtabstop=4
+"设置每一级缩进4个空格
 set shiftwidth=4
 
 "设置自动缩进
@@ -160,13 +161,13 @@ set cursorline
 
 set ruler
 
-"在行和段的开始处使用制表符
+"开启新行时使用智能自动缩进
 set smarttab
 
 "设置不要用空格代替制表符
 "set noexpandtab
 "设置用空格代替制表符
-set expandtab
+"set expandtab
 
 
 "设置历史记录
@@ -182,8 +183,9 @@ set clipboard+=unnamed
 "搜索忽略大小写
 set ignorecase
 
-"搜索字符高亮
+"搜索字符高亮显示
 set hlsearch
+"设置输入搜索内容时即刻显示搜索结果
 set incsearch
 
 "设置跳转到搜索匹配的字符处
@@ -195,14 +197,17 @@ set mouse=a
 "设置显示匹配时间
 set matchtime=5
 
-"设置当前文字编码
+"设置vim内部文字编码
 set encoding=utf-8
 
-"设置文件编码
+"设置保存文件时的编码
 set fileencoding=utf-8
 
 "设置兼容文件编码
 set fileencodings=utf-8,gb2312,gbk,gb18030,cp936
+
+"设置终端编码
+set termencoding=utf-8
 
 "设置显示状态栏
 set laststatus=2
@@ -227,5 +232,5 @@ autocmd FileType haml,javascript,html,css,xml set ai
 autocmd FileType haml,javascript,html,css,xml set sw=2
 autocmd FileType haml,javascript,html,css,xml set ts=2
 autocmd FileType haml,javascript,html,css,xml set sts=2
-
+autocmd FileType python set expandtab
 
