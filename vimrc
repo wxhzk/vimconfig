@@ -10,17 +10,19 @@ filetype off
 set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 "插件位置,添加完插件后，保存退出再进入vim命令模式输入:PluginInstall,安装插件
+"Plugin 'ctrlpvim/ctrlp'
+Plugin 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
 "go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
-Plugin 'fatih/vim-go'             "go-vim包含以上go开发相关的工具插件
+Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' } "go-vim包含以上go开发相关的工具插件
 Plugin 'majutsushi/tagbar'        "替代taglist.vim
 "Plugin 'SuperTab'                 "SuperTab,被包含在YouCompleteMe中
 "Plugin 'Shougo/neocomplete.vim'   "自动补全插件
 "cd ~/.vim/bundle && \
 "git clone https://github.com/scrooloose/syntastic.git
 Plugin 'scrooloose/syntastic'    "语法检查插件--导致打开文件过慢
-Plugin 'Valloric/YouCompleteMe'   "自动补全插件
+Plugin 'Valloric/YouCompleteMe'   "自动补全插件, 要手动进去按装
 "vundle调用结束
 call vundle#end()
 
@@ -30,8 +32,8 @@ call vundle#end()
 "YouCompleteMe配置
 let mapleader = ","      "设置leader为','
 nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nnoremap <leader>gf :YcmCompleter GoToDefinition<CR> "不清楚有啥用
+"nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR> "不清楚有啥用
 let g:ycm_confirm_extra_conf=0                   "关闭加载.ycm_extra_conf.py提示
 let g:ycm_min_num_of_chars_for_completion=2      "设置从第二个字母开始匹配
 let g:ycm_seed_identifiers_with_syntax=1         "语法关键字补全
@@ -57,16 +59,22 @@ let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
 let g:syntastic_enable_balloons = 1 "whether to show balloons
-let g:syntastic_ignore_files=[".*\.py$"] "不检查py
+let g:syntastic_ignore_files=[] "不检查py
 
 let python_highlight_all = 1
 
+let g:Lf_ShortcutF = '<C-P>' "LeaderF文件搜索插件的配置
 "把 F8 映射到 启动NERDTree插件
 map <F9> :NERDTreeToggle<CR>
 
 "Bundle 'majutsushi/tagbar'
 "把F9隐射到启动tarbar"
 nmap <F10> :TagbarToggle<CR>
+
+"======以下是测试命令
+imap tks thanks "插入模式下输入tks，直接变成thanks； "尽量不要隐射输入模式的命令
+nmap <F2> ohello<Esc> "按下普通模式下F2键后输入hello后回到普通模式,o新建一行，并进入insert模式，hello直接插入，<Esc>返回normal模式
+"======以上是测试命令
 
 set tags=./tags,./TAGS,tags;~,TAGS;~
 
@@ -100,6 +108,10 @@ let g:tagbar_type_go = {
     \ }
 
 let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+"只显示当前文件的tag
+let Tlist_Show_One_File = 1
+"如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Exit_OnlyWindow = 1
 let NERDTreeIgnore=['\.pyc', '\.o']
 
 "go语法高亮设置，默认是无高亮
@@ -114,7 +126,7 @@ let g:go_fmt_fail_silently = 1
 
 "git clone https://github.com/Shougo/neocomplete.vim.git 代码补全插件
 "开启代码补全插件
-"let g:nercomplete#enable_at_startup=1
+let g:nercomplete#enable_at_startup=1
 
 
 "以下是独立配置，不依赖任何插件，只有基本的语法高亮
@@ -232,5 +244,6 @@ autocmd FileType haml,javascript,html,css,xml set ai
 autocmd FileType haml,javascript,html,css,xml set sw=2
 autocmd FileType haml,javascript,html,css,xml set ts=2
 autocmd FileType haml,javascript,html,css,xml set sts=2
+autocmd FileType haml,javascript,html,css,xml set nobackup
 autocmd FileType python set expandtab
 
