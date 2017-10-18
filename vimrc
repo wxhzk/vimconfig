@@ -12,6 +12,8 @@ call vundle#begin()
 "插件位置,添加完插件后，保存退出再进入vim命令模式输入:PluginInstall,安装插件
 "Plugin 'ctrlpvim/ctrlp'
 Plugin 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plugin 'python-syntax'
+Plugin 'Yggdroot/indentLine' "缩进标识
 Plugin 'gmarik/vundle'
 Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
 "go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
@@ -32,8 +34,8 @@ call vundle#end()
 "YouCompleteMe配置
 let mapleader = ","      "设置leader为','
 nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-"nnoremap <leader>gf :YcmCompleter GoToDefinition<CR> "不清楚有啥用
-"nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR> "不清楚有啥用
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR> "快速打开文件
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR> 
 let g:ycm_confirm_extra_conf=0                   "关闭加载.ycm_extra_conf.py提示
 let g:ycm_min_num_of_chars_for_completion=2      "设置从第二个字母开始匹配
 let g:ycm_seed_identifiers_with_syntax=1         "语法关键字补全
