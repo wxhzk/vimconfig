@@ -19,6 +19,7 @@ Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
 Plugin 'tell-k/vim-autopep8'	 "依赖autopep8, pip install --upgrade autopep8
 Plugin 'vim-scripts/indentpython.vim' "python自动缩进
+Plugin 'vim-scripts/Pydiction'
 "go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' } "go-vim包含以上go开发相关的工具插件
 Plugin 'majutsushi/tagbar'        "替代taglist.vim
