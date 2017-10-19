@@ -70,7 +70,7 @@ let python_highlight_all = 1
 autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
 
 "将多余的空白字符标示出来
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.go,*.cpp,*.lua match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.cpp match BadWhitespace /\s\+$/
 
 let g:Lf_ShortcutF = '<C-P>' "LeaderF文件搜索插件的配置
 "把 F8 映射到 启动NERDTree插件
