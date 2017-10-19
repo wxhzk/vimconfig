@@ -15,12 +15,14 @@ Plugin 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plugin 'python-syntax'
 Plugin 'Yggdroot/indentLine' "缩进标识
 Plugin 'gmarik/vundle'
+Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
+Plugin 'tell-k/vim-autopep8'	 "依赖autopep8, pip install --upgrade autopep8
+Plugin 'vim-scripts/indentpython.vim' "python自动缩进
 "go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' } "go-vim包含以上go开发相关的工具插件
 Plugin 'majutsushi/tagbar'        "替代taglist.vim
 "Plugin 'SuperTab'                 "SuperTab,被包含在YouCompleteMe中
-"Plugin 'Shougo/neocomplete.vim'   "自动补全插件
 "cd ~/.vim/bundle && \
 "git clone https://github.com/scrooloose/syntastic.git
 Plugin 'scrooloose/syntastic'    "语法检查插件--导致打开文件过慢
@@ -28,8 +30,6 @@ Plugin 'Valloric/YouCompleteMe'   "自动补全插件, 要手动进去按装
 "vundle调用结束
 call vundle#end()
 
-"SuperTab配置
-"let g:SuperTabDefaultCompletionType="context"
 
 "YouCompleteMe配置
 let mapleader = ","      "设置leader为','
@@ -52,8 +52,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_python_checkers=['pylint'] 
-let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd'] "php语法检查配置
+let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck'] "go语法检查插件配置
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:syntastic_cpp_include_dirs = ['/usr/include/']
 let g:syntastic_cpp_remove_include_errors = 1
@@ -61,9 +62,14 @@ let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
 let g:syntastic_enable_balloons = 1 "whether to show balloons
-let g:syntastic_ignore_files=[] "不检查py
+let g:syntastic_ignore_files=[".*\.html$", ".*\.tpl$"] "不检查py
+let g:autopep8_disable_show_diff=1
 
 let python_highlight_all = 1
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+
+"将多余的空白字符标示出来
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.go,*.cpp,*.lua match BadWhitespace /\s\+$/
 
 let g:Lf_ShortcutF = '<C-P>' "LeaderF文件搜索插件的配置
 "把 F8 映射到 启动NERDTree插件
@@ -72,6 +78,10 @@ map <F9> :NERDTreeToggle<CR>
 "Bundle 'majutsushi/tagbar'
 "把F9隐射到启动tarbar"
 nmap <F10> :TagbarToggle<CR>
+nnoremap <C-J> <C-W><C-J> "隐射ctrl+j代替 ctrl+w+j
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "======以下是测试命令
 imap tks thanks "插入模式下输入tks，直接变成thanks； "尽量不要隐射输入模式的命令
@@ -109,6 +119,16 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
+"确保YouCompleteMe能够找到虚拟环境的site packages文件夹
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
 let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
 "只显示当前文件的tag
 let Tlist_Show_One_File = 1
@@ -123,6 +143,7 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1 "设置go文件保存时自动出发gofmt,goimports调用
 let g:go_fmt_fail_silently = 1
 
 
@@ -216,6 +237,12 @@ set encoding=utf-8
 
 "设置保存文件时的编码
 set fileencoding=utf-8
+
+"设置文件格式为unix
+set fileformat=unix
+
+"设置每行最多79个字符
+set textwidth=79
 
 "设置兼容文件编码
 set fileencodings=utf-8,gb2312,gbk,gb18030,cp936
