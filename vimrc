@@ -11,23 +11,27 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 "插件位置,添加完插件后，保存退出再进入vim命令模式输入:PluginInstall,安装插件
 "Plugin 'ctrlpvim/ctrlp'
-Plugin 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plugin 'python-syntax'
-Plugin 'Yggdroot/indentLine' "缩进标识
 Plugin 'gmarik/vundle'
+"搜索插件，类似ctrip
+Plugin 'Yggdroot/LeaderF', { 'do': './install.sh' }
+"python插件
+Plugin 'python-syntax'
 Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdtree'     "nerdtree目录树插件
-Plugin 'tell-k/vim-autopep8'	 "依赖autopep8, pip install --upgrade autopep8
-Plugin 'vim-scripts/indentpython.vim' "python自动缩进
+Plugin 'tell-k/vim-autopep8'			"依赖autopep8, pip install --upgrade autopep8
+Plugin 'Yggdroot/indentLine'			"缩进标识
 Plugin 'vim-scripts/Pydiction'
+Plugin 'vim-scripts/indentpython.vim'	"python自动缩进
+"lua插件
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-lua-ftplugin'
+"文件列表插件
+Plugin 'scrooloose/nerdtree'			"nerdtree目录树插件
 "go相关的插件，依赖的go程序可通过:GoInstallBinaries,:GoUpdateBinaries更新
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' } "go-vim包含以上go开发相关的工具插件
-Plugin 'majutsushi/tagbar'        "替代taglist.vim
-"Plugin 'SuperTab'                 "SuperTab,被包含在YouCompleteMe中
-"cd ~/.vim/bundle && \
-"git clone https://github.com/scrooloose/syntastic.git
-Plugin 'scrooloose/syntastic'    "语法检查插件--导致打开文件过慢
-Plugin 'Valloric/YouCompleteMe'   "自动补全插件, 要手动进去按装
+Plugin 'majutsushi/tagbar'				"替代taglist.vim
+"cd ~/.vim/bundle && git clone https://github.com/scrooloose/syntastic.git
+Plugin 'scrooloose/syntastic'			"语法检查插件--导致打开文件过慢
+Plugin 'Valloric/YouCompleteMe'			"自动补全插件, 要手动进去按装
 "vundle调用结束
 call vundle#end()
 
